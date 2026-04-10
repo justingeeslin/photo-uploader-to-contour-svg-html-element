@@ -20,19 +20,19 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 	
   }
 
-  _unwrapSvg(svgString) {
+  extractSvgChildren(svgString) {
 	const parser = new DOMParser();
 	const doc = parser.parseFromString(svgString, "image/svg+xml");
   
 	const svg = doc.documentElement;
   
 	if (!svg || svg.tagName.toLowerCase() !== "svg") {
-	  throw new Error("Input is not a valid SVG string.");
+	  throw new Error("Invalid SVG");
 	}
   
-	return svg.innerHTML.trim();
+	return Array.from(svg.children); // actual elements (rect, path, etc.)
   }
-
+  
   connectedCallback() {
 	const form = this.closest("form");
 	
@@ -105,8 +105,15 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 						if (!measureResponse.ok) {
 							throw new Error("Measure request failed.");
 						}
+
+						const children = this.extractSvgChildren(measureData.svg[0]);
 						
-						svg_target_element.insertAdjacentHTML("beforeend", this._unwrapSvg(measureData.svg[0]));
+						children.forEach(node => {
+						  // Important: import into current document
+						  const imported = document.importNode(node, true);
+						  imported.setAttribute("data-role", "stock");
+						  svg_target_element.appendChild(imported);
+						});
 						
 					} catch (measureError) {
 						measureStatus.textContent = "Measurement error: " + measureError.message;
