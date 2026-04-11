@@ -111,7 +111,7 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 						children.forEach(node => {
 						  // Important: import into current document
 						  const imported = document.importNode(node, true);
-						  imported.setAttribute("data-role", "stock");
+						  imported.setAttribute("role", "stock");
 						  svg_target_element.appendChild(imported);
 						});
 						
