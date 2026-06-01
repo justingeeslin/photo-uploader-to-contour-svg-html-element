@@ -13,7 +13,7 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 	  </style>
 	
 	  <div class="wrap">
-	  	<div id="status"></div>
+		  <div id="status"></div>
 		<slot></slot>
 	  </div>
 	`;
@@ -42,11 +42,11 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 	
 	const uploadBtn = form.querySelector("[type='submit']");
 	
-	const svg_target_element = document.querySelector(this.getAttribute('target_selector'))
-	console.log("This is my target element:", svg_target_element)
-	
 	form.addEventListener("submit", async (event) => {
 		event.preventDefault();
+		
+		const svg_target_element = document.querySelector(this.getAttribute('target_selector'))
+		console.log("This is my target element:", svg_target_element)
 	
 		if (!fileInput.files.length) {
 			statusEl.textContent = "Please choose at least one file.";
