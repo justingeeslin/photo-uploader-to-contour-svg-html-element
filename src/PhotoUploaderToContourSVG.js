@@ -103,7 +103,9 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 						const measureData = await measureResponse.json();
 	
 						if (!measureResponse.ok) {
-							throw new Error("Measure request failed.");
+							const err = new Error("Measure request failed.");
+							err.response = measureData
+							throw err
 						}
 
 						const children = this.extractSvgChildren(measureData.svg[0]);
@@ -116,7 +118,9 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 						});
 						
 					} catch (measureError) {
-						measureStatus.textContent = "Measurement error: " + measureError.message;
+						measureStatus.textContent = "Measurement error: " + measureError.response.error;
+						console.log("Error:", measureError.response)
+						console.error("Measurement error", measureError)
 					}
 	
 				} else {
