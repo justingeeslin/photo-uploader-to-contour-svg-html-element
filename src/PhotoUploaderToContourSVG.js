@@ -113,7 +113,6 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 						children.forEach(node => {
 						  // Important: import into current document
 						  const imported = document.importNode(node, true);
-						  imported.setAttribute("role", "stock");
 						  
 						  const event = new CustomEvent("SVGready", {
 							detail: imported,
