@@ -8,6 +8,7 @@
   </style>
 </head>
 <body>
+	<h1>Add to a target SVG element</h1>
 	<svg id="board"></svg>
 	<div style="grid-template-columns: 1fr 1fr;">
 		<form id="uploadForm">
@@ -16,9 +17,24 @@
 			</photo-uploader-to-contour-svg>
 			<button type="submit" id="uploadBtn">Upload</button>
 		</form>
-	
-	
 	</div>
+	
+	<h1>Custom Element</h1>
+	<div style="grid-template-columns: 1fr 1fr;">
+		<form id="uploadForm">
+			<photo-uploader-to-contour-svg>
+				<input type="file" id="photos" name="photos[]" multiple required />
+			</photo-uploader-to-contour-svg>
+			<button type="submit" id="uploadBtn">Upload</button>
+		</form>
+	</div>
+	<script>
+		document.body.addEventListener("SVGready", function(e) {
+			console.info("SVG is ready..", e)
+			console.log(e.detail);
+		});
+		
+	</script>
   <script type="module" src="../src/PhotoUploaderToContourSVG.js" type="text/javascript"></script>
 </body>
 </html>

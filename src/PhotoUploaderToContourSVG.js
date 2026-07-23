@@ -114,7 +114,21 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 						  // Important: import into current document
 						  const imported = document.importNode(node, true);
 						  imported.setAttribute("role", "stock");
-						  svg_target_element.appendChild(imported);
+						  
+						  const event = new CustomEvent("SVGready", {
+							detail: imported,
+							bubbles: true,  
+							composed: true
+						  });
+						  
+						  // Dispatch the event.
+						  console.log("SVG is ready.. dispatching custom event..")
+						  form.dispatchEvent(event);
+						  
+						  if (svg_target_element !== null) {
+							svg_target_element.appendChild(imported);	  
+						  }
+						  
 						});
 						
 					} catch (measureError) {
@@ -128,7 +142,6 @@ export default class PhotoUploaderToContourSVG extends HTMLElement {
 				}
 	
 				statusEl.appendChild(div);
-				console.log('Target element', svg_target_element)
 			}
 	
 		} catch (error) {
